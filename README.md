@@ -1,6 +1,15 @@
 # angular-complete-guide-2026
 "https://www.udemy.com/course/the-complete-guide-to-angular-2/" by Maximilian Schwarzmüller
 
+
+Note: 
+
+It is recommanded to use the following command to create a new project:
+```
+ng new first-angular-app --no-zoneless
+```
+
+
 ## Requirements
 ### NodeJS
 https://nodejs.org/en/download
@@ -15,7 +24,9 @@ npm root -g
 ```
 
 
-Note: In order to install Angular in a specific folder, 
+Note: 
+
+In order to install Angular in a specific folder, 
 - **Create a folder for global tools**:
 Example:
 ```
@@ -48,4 +59,10 @@ C:\Dev\npm-global
    ├── ng.cmd   ← Angular command
    ├── node_modules\
    └── ...
+```
+
+
+## Starting your project
+```
+npm start
 ```
