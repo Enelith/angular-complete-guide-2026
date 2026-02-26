@@ -8,10 +8,12 @@ https://nodejs.org/en/download
 ### AngularCLI
 https://angular.dev/tools/cli/setup-local
 
+
 Check where AngularCLI is installed: 
 ```
 npm root -g
 ```
+
 
 Note: In order to install Angular in a specific folder, 
 - **Create a folder for global tools**:
@@ -30,12 +32,15 @@ aka "install my global packages here"
 
 - **Add the folder to PATH Windows**
 
+
 **Result**
+
 Before Install:
 ```
 C:\Dev\npm-global
 (Empty Folder)
 ```
+
 
 After Install: 
 ```
