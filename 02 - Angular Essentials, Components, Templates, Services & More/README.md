@@ -89,4 +89,3 @@ src/
 
 *main.ts* contains TypeScript code. It will be the first code file, so to say, to be executed when your Angular application loads up in the browsers of the visitors.
 
-
