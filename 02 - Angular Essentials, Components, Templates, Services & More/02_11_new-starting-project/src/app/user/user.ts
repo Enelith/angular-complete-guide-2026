@@ -28,4 +28,9 @@ export class UserComponent {
 
   // 2 - Property binding:
   // ex: <img [src]="selectedUser.avatar" [alt]="selectedUser.name"/>
+
+  // Getter for Computed Value (better to use that here instead of the template to make it cleaner)
+  get imagePath() {
+    return 'assets/users/' + this.selectedUser.avatar;
+  }
 }
