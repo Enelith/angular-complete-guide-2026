@@ -36,6 +36,7 @@ export class UserComponent {
 
   // By convention, prefixing a method by "on" means the code inside will be executed upon some event
   onSelectUser() {
-    console.log('Clicked');
+    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+    this.selectedUser = DUMMY_USERS[randomIndex];
   }
 }
