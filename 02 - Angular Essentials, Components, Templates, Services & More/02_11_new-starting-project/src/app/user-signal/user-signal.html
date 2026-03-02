@@ -1,0 +1,24 @@
+<!-- Desired Markup -->
+<div>
+  <!-- Adding an event listener, ex: (click)=... -->
+  <button (click)="onSelectUser()" >
+    <!-- Property Binding Syntax -->
+    <img [src]="imagePath()"
+         [alt]="selectedUser().name" />
+
+    <!-- String Interpolation -->
+    <span>{{ selectedUser().name }}</span>
+    <!--
+    TEMPLATE WISE:
+    Problem: {{ selectedUser.name }}
+
+    We need to extract the value from the Signal object here.
+    You don't access the value stored in the Signal object like usual,
+    but instead you have to call the Signal value as a function (ex: selectedUser() ~ adding parenthesis after the property that stores the Signal).
+
+    This executes the Signal's READ function, which gives you the value that's currently stored in the Signal.
+
+    Solution: {{ selectedUser().name }}
+    -->
+  </button>
+</div>

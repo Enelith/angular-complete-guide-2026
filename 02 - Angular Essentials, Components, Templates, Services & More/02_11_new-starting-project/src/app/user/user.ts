@@ -6,6 +6,14 @@ import { DUMMY_USERS } from '../dummy-users';
 // Having a random number generated, based on the Dummy Users collection
 const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 
+/**
+ * Note:
+ * The State is updated by relying on Zone.js & Angular's change detection mechanism.
+ * This system works automatically, no special instructions are required.
+ * It will scan every component and check if any need to change.
+ *
+ * Supported since Angular 2
+ */
 @Component({
   selector: 'app-user',
   imports: [],
