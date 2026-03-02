@@ -1,6 +1,7 @@
 <!-- Desired Markup -->
 <div>
-  <button>
+  <!-- Adding an event listener, ex: (click)=... -->
+  <button (click)="onSelectUser()" >
     <!-- Property Binding Syntax -->
     <img [src]="imagePath"
          [alt]="selectedUser.name" />

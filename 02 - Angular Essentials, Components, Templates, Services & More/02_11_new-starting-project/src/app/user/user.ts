@@ -33,4 +33,9 @@ export class UserComponent {
   get imagePath() {
     return 'assets/users/' + this.selectedUser.avatar;
   }
+
+  // By convention, prefixing a method by "on" means the code inside will be executed upon some event
+  onSelectUser() {
+    console.log('Clicked');
+  }
 }
