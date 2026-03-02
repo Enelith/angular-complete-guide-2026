@@ -27,13 +27,14 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "sass",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
