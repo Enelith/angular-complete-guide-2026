@@ -1,0 +1,12 @@
+<!-- Desired Markup -->
+<div>
+  <!-- Adding an event listener, ex: (click)=... -->
+  <button (click)="onSelectUser()" >
+    <!-- Property Binding Syntax -->
+    <img [src]="imagePath"
+         [alt]="selectedUser.name" />
+
+    <!-- String Interpolation -->
+    <span>{{ selectedUser.name }}</span>
+  </button>
+</div>
