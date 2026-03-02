@@ -1,7 +1,10 @@
 <!-- Desired Markup -->
 <div>
   <button>
-    <img />
+    <!-- Property Binding Syntax -->
+    <img [src]="'assets/users/' + selectedUser.avatar"
+         [alt]="selectedUser.name" />
+    <!-- String Interpolation -->
     <span>{{ selectedUser.name }}</span>
   </button>
 </div>
