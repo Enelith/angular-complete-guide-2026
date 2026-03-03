@@ -1,10 +1,22 @@
-export type USER = {
+/**
+ * With interface, you can really only define object types.
+ */
+export interface UserAsInterface {
+  id: string;
+  avatar: string;
+  name: string;
+}
+
+/**
+ * With the type keyword, you can also define other types
+ */
+export type UserAsType = {
   id: string;
   name: string;
   avatar: string;
 };
 
-export const DUMMY_USERS: USER[] = [
+export const DUMMY_USERS: UserAsInterface[] = [
   {
     id: 'u1',
     name: 'Jasmine Washington',
