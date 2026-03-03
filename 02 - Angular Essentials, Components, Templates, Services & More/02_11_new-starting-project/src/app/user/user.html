@@ -3,10 +3,17 @@
   <!-- Adding an event listener, ex: (click)=... -->
   <button (click)="onSelectUser()" >
     <!-- Property Binding Syntax -->
-    <img [src]="imagePath"
-         [alt]="name" />
+    <img [src]="imagePath()"
+         [alt]="name()" />
 
     <!-- String Interpolation -->
-    <span>{{ name }}</span>
+    <span>{{ name() }}</span>
+
+    <!--
+    Since "name" is now a signal value, we must execute "name" as a function since that's how you read signal values,
+    and how you get Angular to set up that behind the scenes subscription (which does allow it to efficiently update the UI).
+
+    Likewise for "imagePath".
+    -->
   </button>
 </div>
