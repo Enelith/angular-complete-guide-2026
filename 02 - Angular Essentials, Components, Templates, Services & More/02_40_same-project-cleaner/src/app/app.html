@@ -1,5 +1,9 @@
 <app-header />
 
+<!--
+@for and @if are relatively new, they were introduced with Angular 17.
+As for Legacy Angular, there were ngFor and ngIf (both should be removed from Angular 22.
+-->
 <main>
   <ul id="users">
     <!--
@@ -15,6 +19,15 @@
                   (selectedUser)="onAppHandleSelectedUser($event)" />
       </li>
     }
+
+    <!-- Structural directive *ngFor -->
+    <!-- Note that in order to unlock *ngFor, you need to import it in app.ts from NgFor@angular/common package (as well as in the @Component#imports) -->
+    <!--
+    <li *ngFor="let userItem of users">
+      <app-user [user]="userItem"
+                (selectedUser)="onAppHandleSelectedUser($event)" />
+    </li>
+    -->
   </ul>
 
   @if (targetedUser) {
@@ -22,4 +35,13 @@
   } @else {
     <p id="fallback">Select a user to see their tasks!</p>
   }
+
+  <!-- Structural directive *ngIf -->
+  <!-- Note that in order to unlock *ngIf, you need to import it in app.ts from NgIf@angular/common package (as well as in the @Component#imports) -->
+  <!--
+  <app-tasks *ngIf="targetedUser; else fallback" [name]="targetedUser!.name" />
+  <ng-template #fallback>
+    <p id="fallback">Select a user to see their tasks!</p>
+  </ng-template>
+  -->
 </main>
