@@ -14,7 +14,7 @@ import { DUMMY_USERS } from './dummy-users';
 export class App {
   users = DUMMY_USERS;
 
-  targetUserId: string = '';
+  targetUserId?: string;
 
   get targetedUser() {
     return this.users.find((user) => user.id === this.targetUserId);
