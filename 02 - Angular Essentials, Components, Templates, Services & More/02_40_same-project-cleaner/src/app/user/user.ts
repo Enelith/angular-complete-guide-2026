@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserAsInterface } from '../dummy-users';
+import { type UserAsInterface } from './user.model';
 
 @Component({
   selector: 'app-user',
