@@ -24,8 +24,8 @@ export class UserComponent {
   //@Input({ required: true }) avatar!: string;
   //@Input({ required: true }) name!: string;
 
-  //@Output() selectedUser = new EventEmitter();
-  // Modern way (doesn't create a Signals ~ exactly same than @Output)
+  //@Output() selectedUser = new EventEmitter<string>();
+  // Modern way (doesn't create a Signals ~ exactly same than @Output, less verbose)
   selectedUser = output<string>();
 
   // Instead of @Input, we can also use the Signals system, by using the "input" function.
