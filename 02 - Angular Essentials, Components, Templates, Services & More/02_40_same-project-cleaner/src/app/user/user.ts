@@ -9,6 +9,7 @@ import { type UserAsInterface } from './user.model';
 })
 export class UserComponent {
   @Input({ required: true }) user!: UserAsInterface;
+  @Input({ required: true}) selected!: boolean;
 
   @Output() selectedUser = new EventEmitter<string>();
 

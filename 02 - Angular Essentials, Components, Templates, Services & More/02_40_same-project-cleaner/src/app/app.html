@@ -16,6 +16,7 @@ As for Legacy Angular, there were ngFor and ngIf (both should be removed from An
       <li>
         <!-- Using Property Binding to set `user` -->
         <app-user [user]="userItem"
+                  [selected]="targetUserId === userItem.id"
                   (selectedUser)="onAppHandleSelectedUser($event)" />
       </li>
     }
