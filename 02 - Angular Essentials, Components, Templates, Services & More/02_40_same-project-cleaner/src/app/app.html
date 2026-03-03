@@ -2,26 +2,19 @@
 
 <main>
   <ul id="users">
-    <li>
-      <!-- Using Property Binding to set `user` -->
-      <app-user [user]="users[0]"
-                (selectedUser)="onAppHandleSelectedUser($event)" />
-    </li>
-    <li>
-      <!-- Using Property Binding to set `user` -->
-      <app-user [user]="users[1]"
-                (selectedUser)="onAppHandleSelectedUser($event)" />
-    </li>
-    <li>
-      <!-- Using Property Binding to set `user` -->
-      <app-user [user]="users[2]"
-                (selectedUser)="onAppHandleSelectedUser($event)" />
-    </li>
-    <li>
-      <!-- Using Property Binding to set `user` -->
-      <app-user [user]="users[3]"
-                (selectedUser)="onAppHandleSelectedUser($event)" />
-    </li>
+    <!--
+    With the "track" expression, we're telling Angular which unique identification data can be assigned
+    by Angular automatically behind the scenes to every list item
+    (in our case, every items Angular renders will have the unique userItem.id, which helps Angular
+    to update the list if the list data would change).
+    -->
+    @for (userItem of users; track userItem.id) {
+      <li>
+        <!-- Using Property Binding to set `user` -->
+        <app-user [user]="userItem"
+                  (selectedUser)="onAppHandleSelectedUser($event)" />
+      </li>
+    }
   </ul>
 
   <app-tasks [name]="targetedUser?.name"/>
