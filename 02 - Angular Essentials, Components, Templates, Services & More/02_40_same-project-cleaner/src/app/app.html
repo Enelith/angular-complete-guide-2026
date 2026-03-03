@@ -1,0 +1,46 @@
+<app-header />
+
+<main>
+  <!--
+  <ul id="users">
+    <li>
+      <app-user-zone/>
+    </li>
+    <li>
+      <app-user-signal/>
+    </li>
+  </ul>
+  -->
+  <ul id="users">
+    <li>
+      <!-- Using Property Binding to set `avatar` -->
+      <app-user [id]="users[0].id"
+                [avatar]="users[0].avatar"
+                [name]="users[0].name"
+                (selectedUser)="onAppHandleSelectedUser($event)" />
+    </li>
+    <li>
+      <!-- Using Property Binding to set `avatar` -->
+      <app-user [id]="users[1].id"
+                [avatar]="users[1].avatar"
+                [name]="users[1].name"
+                (selectedUser)="onAppHandleSelectedUser($event)" />
+    </li>
+    <li>
+      <!-- Using Property Binding to set `avatar` -->
+      <app-user [id]="users[2].id"
+                [avatar]="users[2].avatar"
+                [name]="users[2].name"
+                (selectedUser)="onAppHandleSelectedUser($event)" />
+    </li>
+    <li>
+      <!-- Using Property Binding to set `avatar` -->
+      <app-user [id]="users[3].id"
+                [avatar]="users[3].avatar"
+                [name]="users[3].name"
+                (selectedUser)="onAppHandleSelectedUser($event)" />
+    </li>
+  </ul>
+
+  <app-tasks [name]="targetedUser?.name"/>
+</main>
