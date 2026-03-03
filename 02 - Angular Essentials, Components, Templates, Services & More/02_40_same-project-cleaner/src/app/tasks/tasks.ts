@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task';
+import { NewTaskComponent } from './new-task/new-task';
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.html',
   styleUrl: './tasks.scss',
 })
@@ -11,13 +12,14 @@ export class TasksComponent {
   @Input({ required: true }) userId!: string;
   @Input({ required: true }) name!: string;
 
+  isAddingTask: boolean = false;
+
   tasks = [
     {
       id: 't1',
       userId: 'u1',
       title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
+      summary: 'Learn all the basic and advanced features of Angular & how to apply them.',
       dueDate: '2025-12-31',
     },
     {
@@ -31,8 +33,7 @@ export class TasksComponent {
       id: 't3',
       userId: 'u3',
       title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
+      summary: 'Prepare and describe an issue template which will help with project management',
       dueDate: '2024-06-15',
     },
   ];
@@ -43,5 +44,9 @@ export class TasksComponent {
 
   onTaskCompleted(id: string) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
+  }
+
+  onStartAddTask() {
+    this.isAddingTask = !this.isAddingTask;
   }
 }
