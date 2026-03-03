@@ -1,4 +1,4 @@
-import { Component, computed, Input, input } from '@angular/core';
+import { Component, computed, EventEmitter, Input, input, Output, output } from '@angular/core';
 /*
   "Input" is a decorator
   "input" is a function
@@ -20,8 +20,10 @@ export class UserComponent {
    *
    * 3) Adding a "required: true" configuration to @Input will throw an error if the component is called without all required fields declared.
    */
+  @Input({ required: true }) id!: string;
   //@Input({ required: true }) avatar!: string;
   //@Input({ required: true }) name!: string;
+  @Output() selectedUser = new EventEmitter();
 
   // Instead of @Input, we can also use the Signals system, by using the "input" function.
   //
@@ -58,5 +60,7 @@ export class UserComponent {
   imagePath = computed(() => 'assets/users/' + this.avatar());
   // imagePath now becomes a Signal, a Computed Signal.
 
-  onSelectUser() {}
+  onSelectingUser() {
+    this.selectedUser.emit(this.id);
+  }
 }
