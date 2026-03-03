@@ -31,7 +31,8 @@ As for Legacy Angular, there were ngFor and ngIf (both should be removed from An
   </ul>
 
   @if (targetedUser) {
-    <app-tasks [name]="targetedUser.name"/>
+    <app-tasks [userId]="targetedUser.id"
+               [name]="targetedUser.name"/>
   } @else {
     <p id="fallback">Select a user to see their tasks!</p>
   }
