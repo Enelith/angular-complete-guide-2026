@@ -1,6 +1,19 @@
 import { type NewTaskData } from './task/task.model';
+import { Injectable } from '@angular/core';
 
-class TasksService {
+/**
+ * TasksService needs to be registered as something injectable with Angular,
+ * so that Angular knows it can be injected, and that it should look for this thing
+ * when encountering a dependency.
+ *
+ * @Injectable
+ * By adding this decorator, Angular is now aware of this service, and can create such instance when you need it.
+ *
+ * Most importantly, it will only create and reuse one instance, so that different components operate
+ * on the same object in memory, and therefore on the same data.
+ */
+@Injectable({ providedIn: 'root' })
+export class TasksService {
   private tasks = [
     {
       id: 't1',
