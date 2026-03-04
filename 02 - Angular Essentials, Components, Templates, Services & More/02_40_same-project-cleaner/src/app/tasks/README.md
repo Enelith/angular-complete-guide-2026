@@ -25,7 +25,7 @@ ng g(enerate) c(omponent) tasks --skip-tests
 
 ## 02.60 Getting Started with Dependency Injection
 ### TasksComponent
-In order to inject the TasksService into the TasksComponent, we can write in 3 different ways:
+In order to inject the TasksService into the TasksComponent, we can write in different ways:
 
 - We could write as follow:
 ```
@@ -83,6 +83,31 @@ or
 constructor(public tasksService: TasksService) {}
 ```
 This will automatically create a property of the same name.
+
+- Lastly, we can use the `inject` method (from `@angular/core`):
+
+
+Instead of receiving it in the constructor and so on, you can initialize it to a value that is created
+with help of the inject function, which must be imported from @Angular core.
+
+
+So this function must be imported from Angular, and this inject function does what the name implies:
+
+it injects a dependency and provides it as a value for this property.
+
+```
+import { inject } from @angular/core;
+import { TasksService } from './tasks.service';
+
+class TasksComponent {
+  private tasksService = inject(TasksService);
+}
+
+```
+And then you don't instantiate it here, but instead you use just the task service class name as a so-called injection token that's passed to inject.
+
+
+And again, Angular will then do the heavy lifting under the hood.
 
 ### TasksService
 

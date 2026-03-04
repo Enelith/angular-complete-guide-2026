@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type NewTaskData } from '../task/task.model';
+import { TasksService } from '../tasks.service';
 
 /**
  * NgModule needs to be registered in that component by importing FormsModule@angular/forms
@@ -12,13 +13,13 @@ import { type NewTaskData } from '../task/task.model';
   styleUrl: './new-task.scss',
 })
 export class NewTaskComponent {
+  @Input({ required: true }) userId!: string;
   // "void" here means there will be no data emitted
-  @Output() cancelling = new EventEmitter<void>();
-  @Output() adding = new EventEmitter<NewTaskData>();
+  @Output() closing = new EventEmitter<void>();
 
   /**
    * "Normal" version, using Two-Way-Binding:
-   * [(ngModel)] = "enteredTitle_signals"
+   * [(ngModel)] = "enteredTitle"
    */
   enteredTitle = '';
   enteredSummary = '';
@@ -31,15 +32,22 @@ export class NewTaskComponent {
    */
   enteredTitle_signals = signal('');
 
+  // Dependency Injection
+  private tasksService = inject(TasksService);
+
   onCancel() {
-    this.cancelling.emit();
+    this.closing.emit();
   }
 
   onSubmit() {
-    this.adding.emit({
-      title: this.enteredTitle,
-      summary: this.enteredSummary,
-      dueDate: this.enteredDate,
-    });
+    this.tasksService.addTask(
+      {
+        title: this.enteredTitle,
+        summary: this.enteredSummary,
+        dueDate: this.enteredDate,
+      },
+      this.userId,
+    );
+    this.closing.emit();
   }
 }
