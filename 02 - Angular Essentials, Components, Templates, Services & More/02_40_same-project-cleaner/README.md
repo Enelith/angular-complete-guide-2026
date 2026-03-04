@@ -237,3 +237,6 @@ Directives, unlike components, **don't have a template!**.
 
 
 Components are considered directives! Directives with templates.
+
+## 02.58 Transforming Template Data with Pipes
+Official Angular Common [DatePipe Documentation](https://angular.dev/api/common/DatePipe) 
