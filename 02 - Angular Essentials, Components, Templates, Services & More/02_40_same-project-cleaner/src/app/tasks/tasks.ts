@@ -22,7 +22,16 @@ export class TasksComponent {
     return this.tasksService.getUserTasks(this.userId);
   }
 
-  onTaskCompleted(id: string) {}
+  /*
+   #02.62 Time to Practice: Services
+
+   Clicking this complete button ill again remove a task.
+   Implement that logic with help of the service that we built
+   but without using the service here in the TasksComponent.
+
+   => The method will be removed, and the assignment will be done in the TaskComponent instead directly
+   */
+  // onTaskCompleted(id: string) {}
 
   onStartAddTask() {
     this.isAddingTask = true;
