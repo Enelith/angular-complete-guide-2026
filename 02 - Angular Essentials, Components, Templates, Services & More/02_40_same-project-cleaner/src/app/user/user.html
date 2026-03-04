@@ -1,5 +1,4 @@
-<!-- Desired Markup -->
-<div>
+<app-card>
   <!-- Adding an event listener, ex: (click)=... -->
   <button [class.active]="selected"
           (click)="onSelectingUser()" >
@@ -10,4 +9,4 @@
     <!-- String Interpolation -->
     <span>{{ user?.name }}</span>
   </button>
-</div>
+</app-card>
