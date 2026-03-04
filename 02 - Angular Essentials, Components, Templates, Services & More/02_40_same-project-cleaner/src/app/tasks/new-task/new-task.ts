@@ -32,4 +32,8 @@ export class NewTaskComponent {
   onCancel() {
     this.cancelling.emit();
   }
+
+  onSubmit() {
+
+  }
 }
