@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { type NewTaskData } from '../task/task.model';
 
 /**
  * NgModule needs to be registered in that component by importing FormsModule@angular/forms
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class NewTaskComponent {
   // "void" here means there will be no data emitted
   @Output() cancelling = new EventEmitter<void>();
+  @Output() adding = new EventEmitter<NewTaskData>();
 
   /**
    * "Normal" version, using Two-Way-Binding:
@@ -34,6 +36,10 @@ export class NewTaskComponent {
   }
 
   onSubmit() {
-
+    this.adding.emit({
+      title: this.enteredTitle,
+      summary: this.enteredSummary,
+      dueDate: this.enteredDate,
+    });
   }
 }

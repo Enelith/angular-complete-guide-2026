@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task';
 import { NewTaskComponent } from './new-task/new-task';
+import { type NewTaskData } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -51,6 +52,19 @@ export class TasksComponent {
   }
 
   onCancelAddTask() {
+    this.isAddingTask = false;
+  }
+
+  onAddTask(taskData: NewTaskData) {
+    // Use .unshift(...) method (instead of .push(...)) if we want the new item to be positioned in 1st place
+    this.tasks.unshift({
+      id: Date.now().toString(), // Not perfect, but sufficient for this demo
+      userId: this.userId,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.dueDate,
+    });
+
     this.isAddingTask = false;
   }
 }
