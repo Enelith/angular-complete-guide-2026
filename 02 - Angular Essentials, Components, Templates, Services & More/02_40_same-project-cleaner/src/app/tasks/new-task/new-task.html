@@ -4,17 +4,26 @@
   <form>
     <p>
       <label for="title">Title</label>
-      <input type="text" id="title" name="title" />
+      <input type="text" id="title" name="title" [(ngModel)]="enteredTitle" />
     </p>
+
+    <!-- Using Two-Way-Binding on ngModel, we can input a text in input#title, but it would also directly be outputted in input#title2 -->
+    <!--
+    <p>
+      <label for="title">Title2</label>
+      <input type="text" id="title2" name="title2" [(ngModel)]="enteredTitle" />
+    </p>
+    -->
 
     <p>
       <label for="summary">Summary</label>
-      <textarea id="summary" rows="5" name="summary"></textarea>
+      <textarea id="summary" rows="5" name="summary" [(ngModel)]="enteredSummary" ></textarea>
     </p>
 
     <p>
       <label for="due-date">Due Date</label>
-      <input type="date" id="due-date" name="due-date" />
+      <input type="date" id="due-date" name="due-date" [(ngModel)]="enteredDate" />
+      <!-- Note that inputs in HTML will always yield string values, even if it's of type date (it won't yield a date object). -->
     </p>
 
     <p class="actions">

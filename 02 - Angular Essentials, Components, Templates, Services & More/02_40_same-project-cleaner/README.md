@@ -219,3 +219,21 @@ interface Point { y: number; }
 
 const point: Point = { x: 1, y: 2 };
 ```
+
+## 02.53 Using Directives & Two-Way-Binding
+
+### Directives
+With Angular, you can **"enhance" elements** by adding so-called **Directives** to them.
+
+```
+<input ngModel>
+```
+
+Example: ngModel Directive.
+
+An "element enhancement" that helps with extracting (or changing) user input values.
+
+Directives, unlike components, **don't have a template!**.
+
+
+Components are considered directives! Directives with templates.
