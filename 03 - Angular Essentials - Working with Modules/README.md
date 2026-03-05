@@ -69,3 +69,32 @@ If you are, make sure to always add `standalone: false` in this course section h
 
 For the majority of the course this won't matter since we use standalone components as a default anyways. But for this section here, it does matter since it's explicitly NOT about standalone components. 
 
+
+## 03.68 Creating a First Empty Module
+What you typically do in every Angular app that uses Angular Modules, is that you create a root `AppModule`, generally next to your `AppComponent` (in the `app/` folder).
+
+
+Following the naming convention, the file name contains a description of what's inside that file (e.g., `app.module.ts`, a module).
+
+
+The module itself is a `class`, that you generally `export`. Its name by convention is `AppModule`.
+
+It should also be decorated with the `NgModule@angular/core` decorator.
+
+
+Like most decorators, this decorator takes a configuration object, where you now configure this module.
+
+One essential configuration that must be done with help of that module is that you add a `declarations` array to its configuration, because it's that array where you will declare and register all the components, directives, and else that need to work together.
+
+```
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  declarations: []
+})
+export class AppModule {
+
+}
+```
+
+For more complex applications, you could create multiple modules that work together.
