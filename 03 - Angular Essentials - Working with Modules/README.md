@@ -98,3 +98,46 @@ export class AppModule {
 ```
 
 For more complex applications, you could create multiple modules that work together.
+
+
+## 03.69 Bootstrapping Apps with Angular Modules
+
+Components that are configured as `standalone` can't be declared in an NgModule, because Modules and Standalone Components are rivaling concepts.
+
+
+By switching the `AppComponent` to `standalone: false`, the `imports` configuration cannot be used anymore (as it's only available for Standalone Components), but also, in the `main.ts` file, we originally started the application as follow:
+
+```
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app';
+
+bootstrapApplication(AppComponent).catch((err) => console.error(err));
+``` 
+
+As we're now working with a root Angular Module instead of a Standalone Component, you don't start your Angular application like this.
+
+The `main.ts` should be modified as follow: 
+```
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+```
+
+You also need to change the `app.module.ts` file by adding a new configuration to the existing one: `bootstrap: []`.
+
+This will tell Angular which Components of this module are considered the root components you want to set up for your application.
+
+```
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app';
+
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent], // <= We setup the AppComponent as the root component with which the application will start
+})
+export class AppModule {}
+
+``` 

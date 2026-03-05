@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 
-@NgModule({
-  declarations: []
-})
-export class AppModule {
+import { AppComponent } from './app';
 
-}
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
