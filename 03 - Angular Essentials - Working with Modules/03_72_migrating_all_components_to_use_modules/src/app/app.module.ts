@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app';
 import { HeaderComponent } from './header/header';
 import { UserComponent } from './user/user';
-import { CardComponent } from './shared/card/card';
 import { TasksComponent } from './tasks/tasks';
 import { TaskComponent } from './tasks/task/task';
 import { NewTaskComponent } from './tasks/new-task/new-task';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -18,7 +18,6 @@ import { NewTaskComponent } from './tasks/new-task/new-task';
     HeaderComponent,
 
     UserComponent,
-    CardComponent,
 
     TasksComponent,
     TaskComponent,
@@ -27,6 +26,7 @@ import { NewTaskComponent } from './tasks/new-task/new-task';
   imports: [
     BrowserModule, // BrowserModule already includes the DatePipe component needed by TaskComponent, no need to import it again
     FormsModule,
+    SharedModule,
   ],
 })
 export class AppModule {}
