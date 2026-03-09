@@ -141,3 +141,38 @@ import { AppComponent } from './app';
 export class AppModule {}
 
 ``` 
+
+## 03.70 Declaring and Using Components
+Because `AppComponent` is not a **Standalone Component** anymore, components such as `HeaderComponent`, `UserComponent` and `TasksComponent` need to be declared in the `AppComponent` to get ride of the current errors.
+
+
+However, in the `@NgModule` directive:
+- the `declarations` array is for **non-Standalone Components** (which implies modifying the previous mentioned components to switch them as non-standalone components ~ errors otherwise)
+- the `imports` array can be used for **Standalone Components** (which can be convenient when migrating apps). It is not just used for enabling standalone components, but **ALSO FOR INCLUDING OTHER MODULES**.
+
+
+Also, because we're currently *bootstrapping* a NgModule, `BrowserModule@angular/platform-browser` needs to be imported as well (Error NG0402 otherwise: `Injectable was not found in the dependency injection tree`) to the `imports` array of your R*RootModule* (`AppModule` typically).
+
+
+`BrowserModule` provides a collection of things that are needed by every Angular app in order to run correctly. This includes some generally helpful directives that might be used in your application (ex: DatePipe), but also some other crucial features every application needs access to.
+
+
+Every Angular application, when using Angular modules, needs that `BrowserModule`.
+
+```
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app';
+import { HeaderComponent } from './header/header';
+import { TasksComponent } from './tasks/tasks';
+import { UserComponent } from './user/user';
+
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [BrowserModule, HeaderComponent, TasksComponent, UserComponent],
+})
+export class AppModule {}
+
+```
