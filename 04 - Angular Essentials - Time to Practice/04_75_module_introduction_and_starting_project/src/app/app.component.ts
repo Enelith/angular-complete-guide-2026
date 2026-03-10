@@ -10,7 +10,7 @@ import { UserInput } from './user-input/user-input';
   imports: [Header, UserInput],
 })
 export class AppComponent {
-  calculateInvestmentResults(data: {
+  onCalculateInvestmentResults(data: {
     initialInvestment: number;
     annualInvestment: number;
     expectedReturn: number;
@@ -36,6 +36,7 @@ export class AppComponent {
       });
     }
 
-    return annualData;
+    //return annualData;
+    console.log("Annual Data: ", annualData);
   }
 }
