@@ -9,7 +9,8 @@ import type { InvestmentInput } from '../investment-input.model';
   templateUrl: './user-input.html',
   styleUrl: './user-input.scss',
 })
-export class UserInput {
+export class UserInputComponent {
+  // calculate = input<InvestmentInput>(); // <= Signals version
   @Output() calculate = new EventEmitter<InvestmentInput>();
 
   enteredInitialInvestment = '0';
@@ -18,8 +19,6 @@ export class UserInput {
   enteredDuration = '10';
 
   protected onSubmit() {
-    console.log('submit');
-
     // "+" converts a String to a Number
     this.calculate.emit({
       initialInvestment: +this.enteredInitialInvestment,
