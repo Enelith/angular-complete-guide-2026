@@ -13,7 +13,7 @@ export class DashboardItem {
   @Input({ required: true }) title!: string;
   */
 
-  // USING 'INPUT' FUNCTION (only available with Angular@17.1+)
+  // USING 'INPUT' (SIGNAL) FUNCTION (only available with Angular@17.1+)
   image = input.required<{ src: string; alt: string }>(); // In this case, '{ src: string; alt: string}' is a GENERIC TYPE
   title = input.required<string>();
 }

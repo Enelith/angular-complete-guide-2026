@@ -1,8 +1,10 @@
 <div class="dashboard-item">
   <article>
     <header>
-      <img src="status.png" alt="A signal symbol" />
-      <h2>Server Status</h2>
+      <!-- Property Binding: src -> [src] -->
+      <img [src]="image().src" [alt]="image().alt" />
+      <!-- String Interpolation -->
+      <h2>{{ title() }}</h2>
     </header>
 
   </article>
