@@ -55,3 +55,11 @@ Ultimately, there is no clear right or wrong, and it will always depend on prefe
 
 
 Therefore, in our current project, we're going to separate the header and the different dashboards of the `app.component` into separate components.
+
+```bash
+ng g c header --skip-tests
+ng g c dashboard/server-status --skip-tests
+ng g c dashboard/traffic --skip-tests
+ng g c dashboard/tickets --skip-tests
+
+```
