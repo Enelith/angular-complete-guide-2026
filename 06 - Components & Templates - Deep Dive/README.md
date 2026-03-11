@@ -33,12 +33,25 @@ and let's get started with these more advanced concepts now.
 > 
 > — Maximilian Schwarzmüller
 
+## 06.98 When & How to Split Up Components
+
+One of the main ideas behind this component concept in Angular, but also in other libraries and frameworks like React, is that you can **separate concerns**:
+- `Separation of Concerns` principle: Every component should only do **one thing**.
 
 
-
-
-
-
-
+It's a trade-off though:
+- You might want to create very granular small components (and work with many components) ~ `Separation of Concerns`
+- But at the same times, you might end up with a simplier application and more simplicity if you co-locate your code ~ `Simplicity & Code Colocation`
 
 ```
+
+Ultimately, there is no clear right or wrong, and it will always depend on preferences (your own, the team's guidelines, ...) and on the complexity of the application you're working on.
+
+
+**Suggestion**:
+
+- Try to identify the main thing the component does, or the main things that are currently happening in one of your components
+- Split those main things into separate components
+
+
+Therefore, in our current project, we're going to separate the header and the different dashboards of the `app.component` into separate components.
