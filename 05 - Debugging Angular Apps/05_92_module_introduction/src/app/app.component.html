@@ -10,7 +10,10 @@
   </ul>
 
   @if (selectedUser) {
-    <app-tasks [userId]="selectedUser" [name]="selectedUser.name" />
+    <!-- ORIGINAL: error on [userId] (expecting a String, not the entire object) -->
+    <!-- <app-tasks [userId]="selectedUser" [name]="selectedUser.name" /> -->
+    <!-- FIX: -->
+    <app-tasks [userId]="selectedUser.id" [name]="selectedUser.name" />
   } @else {
     <p id="fallback">Select a user to see their tasks!</p>
   }
