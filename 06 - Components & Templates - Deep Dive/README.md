@@ -251,3 +251,38 @@ new-ticket.component.html:
 > And before that we had two spans with that, which was unnecessary.
 > 
 > And that's therefore another feature you should be aware of.
+
+## 06.109 Defining Content Projection Fallbacks
+
+> Now yet another ng-content feature you should be aware of is that you can use it to define some fallback content.
+> 
+> For example, if you had some fallback icon that should be used if no specific icon is defined, you can wrap ng-content around that fallback content.
+
+```
+button.component.html:
+
+<span>
+  <ng-content />
+</span>
+<span class="icon">
+  <ng-content select="icon" >
+    @ // <= What should be displayed if the "icon" part wasn't defined when calling the `button.component`
+  </ng-content>
+</span>
+```
+
+> [...]
+>
+> And it's now this content that would be output if ng-content would fail to select content, which would happen if I remove this span here in the place where the button component is used.
+```
+header.component.html:
+
+<button appButton>
+  Logout
+  <! -- <span ngProjectAs="icon">→</span> --> // <= REMOVING THIS PART
+</button> 
+```
+> If I remove it, there of course is nothing to select for ng-content, and it would then output this fallback content instead.
+> 
+> So if I save this, you see I still have this icon here (IN MY EXAMPLE, IT WOULD DISPLAY "@" INSTEAD OF "→") in the Logout button, but that's now coming from my fallback that's defined here.
+
