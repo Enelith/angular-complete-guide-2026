@@ -63,3 +63,6 @@ ng g c dashboard/traffic --skip-tests
 ng g c dashboard/tickets --skip-tests
 
 ```
+
+## 06.103 Using Content Projection & ng-content
+The concept of using ng-content as a "placeholder" for the wrapped content is also called **Content Projection** (cf. `dashboard-item.html`)
