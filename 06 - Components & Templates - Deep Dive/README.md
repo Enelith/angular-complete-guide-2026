@@ -130,3 +130,124 @@ It will fail silently otherwise.
 >
 >Whenever you're building a brand new component, that just wraps a bunch of built-in elements but doesn't really replace one, you should use the element selector as we did it before.
 
+## 06.108 Exploring Advanced Content Projection
+
+> Now, ng-content has even more features to offer.
+> 
+> For example, let's say that we don't want to have this icon class on a span (cf. header.component.html) outside of this buttons template here (cf. button.component.html).
+```
+header.component.html:
+
+<button appButton>
+  Logout
+  <span class="icon">→</span>
+</button>
+
+button.component.html:
+
+<span>
+  <ng-content />
+</span>
+<ng-content select=".icon" />
+```
+
+> So we might prefer to have this span with this icon class in our button components template.
+> 
+> And we might wanna wrap that around ng-content.
+```
+button.component.html:
+
+<span>
+  <ng-content />
+</span>
+<span class="icon">
+  <ng-content select=".icon" />
+</span>
+```
+
+> Now of course we could do that and still use it in the places where we use the button to make this icon here selectable (cf. header.component.html).
+> 
+> But if we do that, we of course end up with some duplication.
+> 
+> If I now inspect the Logout button, you see that in there we have that icon span which includes another span with the class icon inside of it, which is an unnecessary duplication.
+> 
+> For situations like this, you can offer another feature provided by Angular.
+> 
+> Instead of adding that class here in the place where you use the button component, you can use the special ngProjectAs attribute, which is supported by Angular, as you can tell by the prefix.
+```
+header.component.html:
+
+<button appButton>
+  Logout
+  <span ngProjectAs="">→</span>
+</button>
+```
+
+> And you can add it on any element that's used anywhere where you're using content projection.
+> 
+> And it allows you to define a selector that can then be matched from inside the component where you're trying to project this content into.
+> 
+> So here I'm trying to project this icon (→) into my button component, and I can, for example, project this through the "icon" selector.
+```
+header.component.html:
+
+<button appButton>
+  Logout
+  <span ngProjectAs="icon">→</span>
+</button>
+```
+> So not the class "icon" with a dot,
+```
+  ngProjectAs=".icon"
+```
+> but the element selector, so to say.
+>
+> Now I'm not using "icon" as a HTML element, I'm just setting it for the ngProjectAs property here.
+> 
+> Now, the effect of that is that in the button component where I'm selecting content, I can now select content that has the element "icon", even though I'm never using that element because I'm using this ngProjectAs attribute.
+```
+header.component.html:
+
+<button appButton>
+  Logout
+  <span ngProjectAs="icon">→</span>
+</button>
+
+button.component.html:
+
+<span>
+  <ng-content />
+</span>
+<span class="icon">
+  <ng-content select="icon" /> // <====
+</span>
+```
+> So that simply works together with ng-content, which therefore allows me to now use any selector of my choice.
+>
+> And I can of course now also go to the new-ticket.component. 
+```
+new-ticket.component.html:
+
+<button appButton>
+  Submit
+  <span class="icon">⌲</span>
+</button> 
+```
+> And there on this span, instead of using this class here, we can also use ngProjectAs and use icon like this.
+```
+new-ticket.component.html:
+
+<button appButton>
+  Submit
+  <span ngProjectAs="icon">⌲</span>
+</button> 
+```
+> And that will then be picked up by the select property on ng-content in the button component.
+>
+> And if we save everything, it'll still work as before, but now we don't have that unnecessary wrapping.
+>
+> We still have a span in a span, but we only have one span with the class icon. 
+> 
+> And before that we had two spans with that, which was unnecessary.
+> 
+> And that's therefore another feature you should be aware of.
