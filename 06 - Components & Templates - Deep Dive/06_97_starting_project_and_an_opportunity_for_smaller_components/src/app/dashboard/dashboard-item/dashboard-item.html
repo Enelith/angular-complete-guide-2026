@@ -1,13 +1,11 @@
-<div class="dashboard-item">
-  <article>
-    <header>
-      <!-- Property Binding: src -> [src] -->
-      <img [src]="image().src" [alt]="image().alt" />
-      <!-- String Interpolation -->
-      <h2>{{ title() }}</h2>
-    </header>
+<article>
+  <header>
+    <!-- Property Binding: src -> [src] -->
+    <img [src]="image().src" [alt]="image().alt" />
+    <!-- String Interpolation -->
+    <h2>{{ title() }}</h2>
+  </header>
 
-    <!-- Content Projection -->
-    <ng-content />
-  </article>
-</div>
+  <!-- Content Projection -->
+  <ng-content />
+</article>
