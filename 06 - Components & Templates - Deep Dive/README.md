@@ -481,3 +481,49 @@ button.component.scss:
   transform: translateX(4px);
 }
 ```
+
+## 06.115 Interacting with Host Elements from Inside Components
+
+Instead of having to add the `.control` class to each `<app-button>` elements (which not only is bothersome but also hard to maintain), 
+
+> [...]
+> 
+> Angular gives you another way of adding attributes and properties to your host elements.
+>
+> [...]
+>
+> Go to our ControlComponent, and there we can add another setting to the Component Decorator, another configuration property, and that's the `host` property.
+>
+> Now, host wants an object as a value, and that object then takes any key value pairs of your choice.
+>
+> But what this object will do is it will add the key value pairs you add here as properties on your host element.
+
+```
+control.component.ts: 
+
+import { Component, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'control',
+  }
+})
+export class Control {
+  label = input.required<string>();
+}
+
+```
+
+> So here I could add a key named class and set the value to control and that will add this class attribute, you could say, this class property to app-control wherever it's being used.
+>
+> So I only need to define it once here, but it will be added to all app-controls anywhere in the application.
+>
+> [...]
+>
+> And you can use this host property, not just when encapsulation is set to none, instead, you can always add this if you have certain properties that should be added to the host element, and that can be another useful feature.
+
