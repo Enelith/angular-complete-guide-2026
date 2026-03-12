@@ -286,3 +286,119 @@ header.component.html:
 > 
 > So if I save this, you see I still have this icon here (IN MY EXAMPLE, IT WOULD DISPLAY "@" INSTEAD OF "→") in the Logout button, but that's now coming from my fallback that's defined here.
 
+## 06.112 Understanding & Configuring View Encapsulation
+As it is, the current CSS page is broken, specially in the `control.component` (input fields & textarea).
+
+
+To fix that, we add a *control* class to the paragraph in the `control.component.html`, based on its `.scss` declaration.
+
+```
+control.component.html: 
+
+<p class="control">
+  <label>{{  label() }}</label>
+  <!-- Only inputs or textareas will be selected -->
+  <ng-content select="input, textarea"/>
+</p>
+
+```
+By doing so, the behaviour is fixed to some extent.
+
+> The label looks better now, which is a start, but the input and text area isn't looking the way it should look.
+>
+> It doesn't look horrible, but it doesn't have the look it should have.
+>
+> And why is that the case?
+> 
+> After all, we have this rule here, right?
+
+```
+control.component.scss: 
+
+.control input,
+.control textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #4f4b53;
+}
+
+```
+> Well yes, but with this CSS rule, we are trying to style inputs and text areas that are inside of an element with the class control on it.
+>
+> [...]
+>
+> So these styles here should become active on them, right?
+>
+> Yeah, almost.
+>
+> The problem is Angular does not care about which content might eventually end up in your components template.
+> 
+> It only cares about what it sees in your component template, and there it just sees a placeholder, not the actual inputs or text areas that will end up here in the future.
+> 
+> And that's why these styles won't affect the inputs and text areas that will be projected into this paragraph and into this component.
+>
+>
+> So what can we do about that?
+>
+>
+> Well you can disable the scoping of these styles here for example, because by default, as I explained, component styles are scoped to the component to which they belong.
+>
+> They can't affect anything else anywhere in any other component.
+>
+> But here I actually wanna have these styles affect inputs and text areas that are somewhere else in the application. And therefore what we should do here or what we could do to fix this problem is go to the component selector of the control component, and add a new setting here.
+>
+> And the new setting you want to add is the **encapsulation** setting.
+>
+> And encapsulation takes a value of type **ViewEncapsulation**.  And that is actually a so-called enum, which is essentially a collection of possible values.
+>
+> [...]
+>
+> Now (ViewEncapsulation.)*Emulated* would be the default and you don't need to set it.
+>
+> *Emulated* means that Angular emulates the ShadowDom behavior, which is a browser thing, which in the end means that styles that belong to a component or to an element should be scoped to that element.
+
+```
+SHADOW DOM: 
+
+A BROWSER FEATURE that allows you to attach hidden DOM structures to DOM elements.
+
+Example: 
+The built-in <video> element hides a more complex DOM tree that's used internally.
+
+For CSS styling, the Shadow DOM can be used to scope CSS styles to that hidden tree - instead of applying styles globally to the entire page.
+
+Angular can EMULATE this Shadow DOM browser feature for its own components.
+
+```
+> Alternatively, you could choose (ViewEncapsulation.)*ShadowDom* so that Angular under the hood uses the real browser ShadowDom feature, which is not supported by all browsers though, which is why emulated is the default.
+>
+> But here we need (ViewEncapsulation.)*None*, which simply disables that style scoping. That style encapsulation as Angular calls it.
+
+```
+control.component.ts: 
+
+import { Component, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+})
+export class Control {
+  label = input.required<string>();
+}
+
+```
+
+> With that setting added here to this control component, the styles set up here will again become global styles and therefore now they will affect the input and text area that is eventually rendered into this component.
+>
+> And that's therefore another important feature to know.
+>
+> You will typically not need to disable encapsulation that often, but if you do need to, like here in this example, this is how you can do it.
+
