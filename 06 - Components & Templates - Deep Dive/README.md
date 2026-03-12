@@ -402,3 +402,82 @@ export class Control {
 >
 > You will typically not need to disable encapsulation that often, but if you do need to, like here in this example, this is how you can do it.
 
+## 06.113 Making Sense of Component Host Elements
+
+**Component Host Elements**: 
+
+
+Every Angular component has a **Host Element**.
+
+```
+Example: 
+
+A component with a selector of "app-header" targets an <app-header> element which is rendered into the real DOM.
+```
+
+**Important**: 
+
+The elements targeted by your components selectors **do NOT** act as placeholders and **are NOT** replaced when the page is rendered!
+
+
+Instead, the selected elements are *preserved* and simply *"enhanced" / taken over* by your component logic & markup!
+
+
+The component Host Element is **NOT** considered a part of the component template, but will be affected by the (scoped) component styles via `:host`.
+
+
+Therefore, in the `button.component`, because our template is as follow (no trace of a `<button>`): 
+```
+button.component.ts:
+
+@Component({
+  selector: 'button[appButton]', // <= This is the component Host Selector here: a <button appButton>
+  imports: [],
+  templateUrl: './button.html',
+  styleUrl: './button.scss',
+})
+
+```
+```
+button.component.html: 
+
+<span>
+  <ng-content />
+</span>
+<span class="icon">
+  <ng-content select="icon" >
+    →
+  </ng-content>
+</span>
+
+```
+We can fix the problem by replacing our current css with the following, where `:host` was originally `button`:
+```
+button.component.scss: 
+
+:host {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #691ebe;
+  color: white;
+  border: none;
+}
+
+:host:hover {
+  background-color: #551b98;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+:host:hover .icon {
+  transform: translateX(4px);
+}
+```
