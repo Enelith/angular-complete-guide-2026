@@ -673,7 +673,7 @@ import { Component, HostBinding, HostListener, input, ViewEncapsulation } from '
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'control',
-    // 'click': 'onClick()'
+    // '(click)': 'onClick()'
   },
 })
 export class Control {
@@ -699,3 +699,74 @@ export class Control {
 > So that's how you could listen to events on your host elements.
 >
 > Of course, we now also have to make sure that this onClick method exists though, otherwise this will fail.
+
+## 06.118 Accessing Host Elements Programmatically
+
+> So knowing how to listen to events on the host element and knowing about HostBinding and HostListener is important as an Angular developer.
+> 
+> There is one other last host element-related feature you should know about though because sometimes in certain situations, you might need programmatic access to the host element.
+> 
+> So you might need to interact with it from inside your TypeScript code.
+> 
+> For example, let's say here, when we click on the host element, I wanna output some information about it, which obviously is not a real use case. But here in this app I don't have a real use case because it is a feature you won't need that often, but you should still know about it.
+> 
+> So for this demo, let's say we wanna log some host element information whenever it is clicked.
+> 
+> Now, what you can do to achieve this is you can inject a special value into your component, a value that will be provided by Angular, and you can inject either with the constructor as you learned it for services or with help of that 'inject' function about which you also learned.
+> And I'll use the latter here, but both would work.
+> 
+> So for that, I'll add a private property here, which therefore won't be exposed to the template of this component since I don't need access to it there.
+> 
+> And I'll name it el, but the name is up to you.
+> 
+> And the value of that property should then be the result of calling inject, which must be imported from @angular/core, of course.
+> And to inject, we now have to pass a special class name, the ElementRef class name, which also must be imported from @angular/core.
+> 
+> ElementRef is a class defined by Angular.
+> So it's part of the Angular framework, which defines a reference to some element that's rendered to the page.
+> 
+> So it's pretty generic because it can refer to any element on the page.
+> 
+> But by injecting it into a component like this, Angular will give you access to the host element of that component.
+> 
+> So therefore here, we can console.log(this.el).
+```
+import { Component, ElementRef, inject, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'control',
+    '(click)': 'onClick()'
+  },
+})
+export class Control {
+  // @HostBinding() className = 'control';
+  // @HostListener('click') onClick() {
+  //   console.log('Clicked!');
+  // }
+
+  label = input.required<string>();
+  private el = inject(ElementRef);
+
+  onClick() {
+    console.log('Clicked!');
+    console.log(this.el);
+  }
+}
+
+``` 
+> And with that, if you save it and you reload, if you click on that app-control element, you get clicked, of course, but you also get that injected ElementRef object, and that is then an object that has a nativeElement property.
+> 
+> And that property then actually holds your host element. So if I expand that, you see that this is in the end what Angular knows about the host element that's rendered to the DOM.
+> And it's essentially a collection of properties that exist for all DOM elements.
+> And you could now extract information from those properties.
+> 
+> You could also change them, though you should be careful about that because you typically don't wanna start changing what's visible on the page programmatically by using the ElementRef.
+> 
+> Instead, you should change what's visible on the page by changing data and using template features as we always did it throughout this course. But if you need programmatic access to the host element, this is how you can get it: by injecting ElementRef.
+
