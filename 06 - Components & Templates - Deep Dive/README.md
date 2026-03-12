@@ -527,3 +527,175 @@ export class Control {
 >
 > And you can use this host property, not just when encapsulation is set to none, instead, you can always add this if you have certain properties that should be added to the host element, and that can be another useful feature.
 
+## 06.117 Interacting with Host Elements via @HostListener & @HostBinding
+
+> Now when it comes to working with that host element of an Angular component, there are two other things you should know about.
+>
+> And the first thing is that when it comes to adding properties to the host element, you can use this host setting on the Component decorator object, and that is the preferred way of doing it.
+
+```
+control.component.ts: 
+
+import { Component, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'control',
+  }
+})
+export class Control {
+  label = input.required<string>();
+}
+
+```
+
+> But alternatively, you can also add a property to your component class and name it "className", for example, and set the value you wanna bind on your host element, so "control" in my case. And then decorate this with the HostBinding decorator, which must be imported from @angular/core. 
+>
+> Now what HostBinding will do is it will take a look at this property name ("className"), and it will then add it as a property to the host element and set this ("control") as a value for that property.
+>
+> Therefore, I can comment out host here and instead use HostBinding. 
+
+```
+import { Component, HostBinding, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  // host: {
+  //   class: 'control',
+  // }
+})
+export class Control {
+  @HostBinding() className = "control";
+  
+  label = input.required<string>();
+}
+
+```
+>
+> Now, I technically don't wanna use "className" here, but "class", and I could use it here.
+>
+> But to avoid any confusion with the built-in `class` keyword, we might wanna use a slightly different property name here. And that's why HostBinding, this decorator, also takes an optional input, an optional argument, which allows you to define the actual property that should be bound as a string.
+> 
+> So now the value here ("control") will be set as a value for this "class" property with help of HostBinding, even though the property name here ("className") is different.
+
+```
+import { Component, HostBinding, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  // host: {
+  //   class: 'control',
+  // }
+})
+export class Control {
+  @HostBinding('class') className = "control";
+  
+  label = input.required<string>();
+}
+
+```
+> You only need this argument here ("class") though if you have a different property name ("className"), then you wanna bind.
+>
+> [...]
+>
+> That being said, using HostBinding is discouraged though. You should instead use the host property. This feature just exists for backward compatibility reasons, because in the past it was a common way of setting those host properties.
+>
+> Nowadays, you should prefer this "host" property on the Component decorator object.
+>
+> There also is a HostListener decorator, which you can import and use, which allows you to bind a method to an event to which you wanna listen here.
+>
+> Alternatively, you could add event binding here (@Component) as well.
+>
+> And for example, listen to a click event, and then here (class ControlComponent) define the method of the class that should be executed when that event occurs.
+> 
+> So here, for example, we could add a onClick method and simply, console.log('Clicked').
+> 
+> And if you wanna trigger this whenever the host element is clicked, we can either do that by adding this value to our host object here in the Component decorator.
+>
+> So I'm using that event binding syntax here ("'(click)'"), as you can tell.
+> 
+> And then also as a string, I define the code that should execute when that click on the host element occurs.
+
+```
+import { Component, HostBinding, HostListener, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'control',
+    '(click)': 'onClick()'
+  }
+})
+export class Control {
+  // @HostBinding() className = "control";
+  // @HostListener()
+
+  label = input.required<string>();
+
+  onClick() {
+    console.log('Clicked!');
+  }
+}
+
+```
+> So here I'm telling Angular that it should execute the onClick method of this component.
+>
+> And if you do that and you comment out HostListener for the moment, if you open your console here on the page, whenever I click into one of my controls, you see click gets logged here.
+>
+> So you can also listen to events on the host element by using this syntax, or as I mentioned, alternatively with HostListener.
+> 
+> Then you would directly assign the method that should be triggered as a value here. Though, you then also must pass an argument to HostListener and specify the event to which it should listen.
+```
+import { Component, HostBinding, HostListener, input, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'app-control',
+  imports: [],
+  templateUrl: './control.html',
+  styleUrl: './control.scss',
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'control',
+    // 'click': 'onClick()'
+  },
+})
+export class Control {
+  // @HostBinding() className = 'control';
+  @HostListener('click') onClick() {
+    console.log('Clicked!');
+  }
+
+  label = input.required<string>();
+}
+
+```
+> So now you would be telling Angular that it should listen to click events on the host element and trigger that method whenever such a click occurs.
+>
+> With that, if I save this and reload, we also see that clicked output in the console as I click on those controls.
+> 
+> So that again, is an alternative to using this syntax.
+> 
+> Now, I personally actually prefer this alternative (@HostListener).
+>
+> I think it looks a bit cleaner than defining this here ("host: { 'click': 'onClick()' }), but the Angular team recommends this approach, which is why I'm showing it and recommending it to you here in this course.
+>
+> So that's how you could listen to events on your host elements.
+>
+> Of course, we now also have to make sure that this onClick method exists though, otherwise this will fail.
