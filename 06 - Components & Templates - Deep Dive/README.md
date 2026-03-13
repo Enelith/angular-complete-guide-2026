@@ -770,3 +770,30 @@ export class Control {
 > 
 > Instead, you should change what's visible on the page by changing data and using template features as we always did it throughout this course. But if you need programmatic access to the host element, this is how you can get it: by injecting ElementRef.
 
+## 06.122 Manipulating State & Using Literal Values
+
+The tutorial shows how to change the value of `currentStatus` every 5s, and how it reflects on display.
+ 
+However, the explanation failed, probably because of the Angular version ?
+
+### Gemini
+
+>  I'm trying to update the 'currentStatus' variable value every 5seconds in the constructor() method. But in my @server-status.html, the browser doesn't update the value displayed ? 
+
+``` 
+There are a few reasons why the browser might not be updating the displayed value.
+1. Change Detection & Zone.js: While setInterval generally triggers change detection in standard Angular applications, modern Angular development (especially in 2024+) leans heavily towards Signals and sometimes "Zoneless" applications. In these modern contexts, simply updating a class property (this.currentStatus = ...) does not guarantee a view update.
+
+2. Lifecycle Best Practices: Using the constructor for side effects (like intervals) is generally discouraged compared to ngOnInit. More importantly, the current code creates a memory leak because the interval is never cleared when the component is destroyed.
+
+3. Probability: It is also possible that Math.random() is simply returning values < 0.5 repeatedly, keeping the status "online" for a long time, making it look like it's stuck.
+
+To fix the update issue and adhere to modern Angular standards, you should:
+1. Use Signals for currentStatus. Signals notify Angular precisely when a value changes, ensuring the view updates immediately.
+2. Use the ngOnInit lifecycle hook for setting up the interval.
+3. Use DestroyRef to clean up (clear) the interval when the component is destroyed.
+
+```
+
+Because `ngOnInit` will be explained in the next lesson, sticking with `constructor()` for now. The code now works but required some modifications.
+
