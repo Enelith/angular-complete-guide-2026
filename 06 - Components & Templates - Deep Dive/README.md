@@ -830,3 +830,120 @@ Guide to [Component Lifecycle](https://angular.dev/guide/components/lifecycle)
 > 
 > With that change made, if you save that, you'll see that if you reload, this application still works the same it did before, eventually the server status will change.
 
+## 06.127 Component Cleanup with DestroyRef
+
+```
+server-status.component.ts: 
+
+import { AfterViewInit, Component, OnDestroy, OnInit, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-server-status',
+  imports: [],
+  templateUrl: './server-status.html',
+  styleUrl: './server-status.scss',
+})
+export class ServerStatus implements OnInit, AfterViewInit, OnDestroy {
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('online');
+
+  private interval?: ReturnType<typeof setInterval>;
+
+  ngOnInit() {
+    console.log('ngOnInit');
+
+    this.interval = setInterval(() => {
+      const rdm = Math.random(); // 0 -> 1 (excluded, so... 0,99999)
+
+      if (rdm < 0.5) {
+        this.currentStatus.set('online');
+      } else if (rdm < 0.8) {
+        this.currentStatus.set('offline');
+      } else {
+        this.currentStatus.set('unknown');
+      }
+    }, 5000);
+  }
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.interval);
+  }
+}
+
+```
+> So ngOnDestroy can be helpful.
+>
+> Angular actually also has an alternative to this ngOnDestroy method, a more modern alternative which won't work in older Angular versions.
+
+```
+Note: You can use this approach and use DestroyRef when using Angular v16+.
+```
+
+> So if you are getting problems with the alternative I'm about to show you, you should simply use ngOnDestroy.
+>
+> But here I'll comment out ngOnDestroy and I'll get rid of that OnDestroy interface so that I'm not forced to add ngOnDestroy. And I'll get rid of that property, this interval property, because now I'll use a different approach for cleaning up this interval.
+>
+> Angular allows you to inject a special value into your Components. A so called DestroyRef, a Destroy reference, and you can inject it with help of the constructor or with help of the inject function.
+>
+> The type you need to inject is DestroyRef, which is imported from @Angular/core.
+>
+> DestroyRef is a class provided by Angular, and by injecting it and storing it in a property, you can set up a listener with help of that property (destroyRef) and that injected value (inject(DestroyRef)) that will trigger a function whenever the Component into which you injected DestroyRef is about to be destroyed.
+>
+> And that's that alternative to ngOnDestroy I mentioned. 
+> 
+> So here for example, we could now simply store our interval in a constant (const interval = setInterval(...)), which is only available in ngOnInit, because right after setting that interval, we can use DestroyRef to call OnDestroy and register a function that will be executed by Angular when this Component is about to be destroyed (this.destroyRef.onDestroy(() => { ... })).
+>
+> And it's now in here where we could call (the method) clearInterval, and pass our interval constant to it (clearInterval(interval)). That interval constant is only available in ngOnInit, but that's also where I'm setting up this Destroy listener.
+>
+> And you can use this and set up as many OnDestroy listeners as you need in any methods of this Component. You cannot just use it once. You can use it as often as you want.
+>
+> And that's therefore an elegant alternative to ngOnInit, which you also should know about.
+> 
+> It's not available in older Angular versions, but if you are encountering an error related to DestroyRef, you can simply use ngOnDestroy as an alternative. 
+
+```
+server-status.component.ts: 
+
+import { AfterViewInit, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-server-status',
+  imports: [],
+  templateUrl: './server-status.html',
+  styleUrl: './server-status.scss',
+})
+export class ServerStatus implements OnInit, AfterViewInit {
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('online');
+
+  private destroyRef = inject(DestroyRef);
+
+  ngOnInit() {
+    console.log('ngOnInit');
+
+    // Every 5s, the function will be executed.
+    const interval = setInterval(() => {
+      const rdm = Math.random(); // 0 -> 1 (excluded, so... 0,99999)
+
+      if (rdm < 0.5) {
+        this.currentStatus.set('online');
+      } else if (rdm < 0.8) {
+        this.currentStatus.set('offline');
+      } else {
+        this.currentStatus.set('unknown');
+      }
+    }, 5000);
+
+    this.destroyRef.onDestroy(() => {
+      clearInterval(interval);
+    })
+  }
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+  }
+}
+
+```
