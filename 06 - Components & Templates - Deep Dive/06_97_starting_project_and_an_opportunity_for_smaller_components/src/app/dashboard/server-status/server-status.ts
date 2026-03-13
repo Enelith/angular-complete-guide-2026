@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -6,14 +6,14 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
   templateUrl: './server-status.html',
   styleUrl: './server-status.scss',
 })
-export class ServerStatus {
+export class ServerStatus implements OnInit {
   // We're going to disable the inference of TypeScript (from which it assumes 'currentStatus' is of type String) by explicitly assigning a type
   // Setting specific string values as types uses a TypeScript feature called "Literal Types".
   // The idea is to only allow specific (string) values - instead of all strings.
   currentStatus = signal<'online' | 'offline' | 'unknown'>('online');
   private destroyRef = inject(DestroyRef);
 
-  constructor() {
+  ngOnInit() {
     // Every 5s, the function will be executed.
     const interval = setInterval(() => {
       const rdm = Math.random(); // 0 -> 1 (excluded, so... 0,99999)

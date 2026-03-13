@@ -797,3 +797,36 @@ To fix the update issue and adhere to modern Angular standards, you should:
 
 Because `ngOnInit` will be explained in the next lesson, sticking with `constructor()` for now. The code now works but required some modifications.
 
+## 06.123 Introducing the Component Lifecycle: ngOnInit
+
+Guide to [Component Lifecycle](https://angular.dev/guide/components/lifecycle)
+
+> Here I am using the constructor of this component class to set up an interval whenever this class is instantiated. So whenever this component is created in the end.
+> 
+> Now, you can use the constructor for tasks like this. It's not wrong, but it's typically recommended that you use a different component method because all those Angular Components go through a Component Lifecycle, and that simply means that when Angular instantiates and renders that component, and when it then checks it for changes in the future, certain lifecycle hooks are triggered by Angular.
+> Certain methods you can add to your component class to run code at certain points in time of this component's lifecycle.
+> 
+> We already solved the constructor, but therefore example also is an ngOnInit method you can add to a component because as you learn in the official docs and a link to this article is attached, this ngOnInit method will be executed by Angular whenever Angular has initialized this component's inputs.
+> So whenever it essentially is done initializing this component.
+> 
+> There also are some other hooks and I'll say right away that you typically don't need all of them.
+> Some of them are for pretty niche cases, but I'll get back to them later.
+>
+> For the moment it's this ngOnInit hook I'm interested in.
+> 
+> To get Angular to execute it, all you have to do is go to your component where you want to do something at that point in the component lifecycle and you add the ngOnInit method to that component class.
+> That's all. Now Angular will execute it. It only needs to be there.
+> 
+> So now we can grab that code from the constructor and instead execute it in ngOnInit. Now, even though it did work in the constructor without problems, and even though it wouldn't be wrong for simple use cases and applications like this, you should actually prefer using ngOnInit for initialization work like setting up this interval, it is considered a good practice in Angular applications to keep your constructor lean and only do basic class initialization work in there.
+> So if you wanna assign some initial class property values or things like that.
+> 
+> Anything else, especially more complex tasks like sending HTTP requests, which we'll do later in the course, should not go into the constructor, but instead into ngOnInit.
+> 
+> In addition, as you can also see in the official documentation, one difference between the constructor and ngOnInit also is that in ngOnInit, Angular is DONE initializing the component inputs.
+> 
+> So if your component receives any input values, those values will be initialized and will be available in ngOnInit, whereas that is not the case in the constructor.
+> 
+> So that might be another reason for using ngOnInit. But as mentioned in general, you should simply prefer it over the constructor to follow that recommended best practice.
+> 
+> With that change made, if you save that, you'll see that if you reload, this application still works the same it did before, eventually the server status will change.
+
